@@ -8,10 +8,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const [hidden, setHidden] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
-            setScrolled(window.scrollY > 20);
+            const currentScrollY = window.scrollY;
+            setScrolled(currentScrollY > 20);
+            setHidden(currentScrollY > 50); // Hide after 50px scroll
         };
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
@@ -21,8 +24,11 @@ export default function Navbar() {
         <>
             <motion.header
                 initial={{ y: -100, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
+                animate={{
+                    y: hidden && !isOpen ? -100 : 0,
+                    opacity: hidden && !isOpen ? 0 : 1
+                }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
                 className={`fixed top-4 left-0 right-0 z-50 transition-all duration-300 mx-auto max-w-4xl ${scrolled || isOpen ? 'glass-nav rounded-full py-3 px-6 shadow-lg' : 'bg-transparent py-4 px-6'
                     }`}
             >
