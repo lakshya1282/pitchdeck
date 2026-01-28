@@ -7,14 +7,14 @@ import { useState } from "react";
 export default function Contact() {
     return (
         <section id="contact" className="section-padding bg-background text-foreground relative border-t border-secondary/10">
-            <div className="container-width flex flex-col md:flex-row gap-16 md:gap-32">
+            <div className="container-width flex flex-col md:flex-row gap-12 md:gap-20">
                 {/* Left: Info */}
-                <div className="md:w-1/2 flex flex-col justify-between">
+                <div className="md:w-2/5 flex flex-col justify-between min-w-0">
                     <div>
-                        <h2 className="font-display text-[6vw] leading-[0.9] uppercase text-foreground mb-8">
+                        <h2 className="font-display text-[12vw] md:text-[5vw] leading-[0.9] uppercase text-foreground mb-8">
                             Start<br />line
                         </h2>
-                        <p className="font-body text-secondary/80 mb-8 max-w-md">
+                        <p className="font-body text-secondary/80 mb-8 leading-relaxed text-base md:text-lg">
                             Ready to build something extraordinary? We are currently accepting new projects globally.
                         </p>
                     </div>
@@ -26,7 +26,7 @@ export default function Contact() {
                 </div>
 
                 {/* Right: Simple Form */}
-                <div className="md:w-1/2">
+                <div className="md:w-3/5">
                     <form className="flex flex-col gap-0 border-t border-secondary/20">
                         <div className="group relative border-b border-secondary/20 hover:bg-primary/50 transition-colors">
                             <input type="text" placeholder="Name" className="w-full bg-transparent py-8 px-4 font-body text-xl outline-none placeholder:text-secondary/50 text-foreground" />

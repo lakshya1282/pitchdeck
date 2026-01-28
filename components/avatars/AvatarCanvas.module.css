@@ -1,0 +1,71 @@
+.avatarWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.avatarBgGlow {
+  position: absolute;
+  inset: 0;
+  opacity: 0.2;
+  filter: blur(48px);
+  will-change: opacity, transform;
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+.avatarFloatWrapper {
+  position: relative;
+  z-index: 10;
+  animation: float 4s ease-in-out infinite;
+  will-change: transform;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.avatarFloatWrapper:hover {
+  animation-play-state: paused;
+  transform: scale(1.08) translateY(-5px);
+}
+
+.avatarImage {
+  width: 100%;
+  height: auto;
+  max-width: min(320px, 90vw);
+  filter: drop-shadow(0 25px 25px rgba(0, 0, 0, 0.15));
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-15px) scale(1.02);
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(1.1);
+  }
+}
+
+@media (max-width: 768px) {
+  .avatarFloatWrapper {
+    animation: float 3.5s ease-in-out infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avatarFloatWrapper,
+  .avatarBgGlow {
+    animation: none;
+  }
+}
