@@ -29,10 +29,10 @@ export default function About() {
                         </p>
 
                         <div className="grid grid-cols-2 gap-4 mt-8">
-                            <Stat label="PROJECTS" value="50+" />
-                            <Stat label="AWARDS" value="12" />
-                            <Stat label="CLIENTS" value="Global" />
-                            <Stat label="VIBE" value="100%" />
+                            <Stat label="SINCE" value="2024" />
+                            <Stat label="TEAM" value="4" />
+                            <Stat label="TECH STACKS" value="10+" />
+                            <Stat label="COMMITMENT" value="100%" />
                         </div>
                     </div>
                 </div>

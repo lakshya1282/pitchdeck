@@ -22,12 +22,14 @@ const teamMembers = [
         name: "Abdul Sheikh Zeeshan",
         role: "Frontend Developer",
         image: "/team/zeeshan.png",
+        mobileImage: "/team/mobile/zeeshan.webp",
     },
     {
         id: 3,
         name: "Lakshya Parmar",
-        role: "Backend Developer",
-        image: "/team/lakshya.jpeg", // Added back as requested
+        role: "Frontend Developer",
+        image: "/team/lakshya.jpeg",
+        mobileImage: "/team/mobile/lakshya.jpeg",
     },
     {
         id: 4,
@@ -157,11 +159,23 @@ export default function MeetTeam() {
                         <div className="relative w-full h-full flex flex-col items-center justify-center overflow-hidden">
                             {/* Background Image - Full Cover */}
                             <div className="team-image-container absolute inset-0 w-full h-full overflow-hidden">
+                                {/* Mobile Image - only for members with mobileImage */}
+                                {member.mobileImage && (
+                                    <Image
+                                        src={member.mobileImage}
+                                        alt={member.name}
+                                        fill
+                                        className="team-image object-cover object-center md:hidden"
+                                        priority={index === 0}
+                                        quality={90}
+                                    />
+                                )}
+                                {/* Desktop Image (or fallback for all screens if no mobileImage) */}
                                 <Image
                                     src={member.image}
                                     alt={member.name}
                                     fill
-                                    className="team-image object-cover object-center"
+                                    className={`team-image object-cover object-center ${member.mobileImage ? 'hidden md:block' : ''}`}
                                     priority={index === 0}
                                     quality={90}
                                 />

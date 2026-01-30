@@ -1,95 +1,122 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useCallback } from 'react';
+import { motion } from 'framer-motion';
+import { StaggeredMenu } from '@/components/StaggeredMenu';
+
+const menuItems = [
+    { label: 'Home', link: '#', ariaLabel: 'Go to home' },
+    { label: 'Services', link: '#services', ariaLabel: 'View our services' },
+    { label: 'About', link: '#about', ariaLabel: 'Learn about us' },
+    { label: 'Work', link: '#work', ariaLabel: 'See our work' },
+    { label: 'Contact', link: '#contact', ariaLabel: 'Get in touch' },
+];
+
+const socialItems = [
+    { label: 'Instagram', link: 'https://instagram.com' },
+    { label: 'LinkedIn', link: 'https://linkedin.com' },
+];
 
 export default function Navbar() {
-    const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [hidden, setHidden] = useState(false);
+    const [lastScrollY, setLastScrollY] = useState(0);
+    const [mouseAtTop, setMouseAtTop] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [inFooter, setInFooter] = useState(false);
+
+    // Smart scroll detection + footer detection
+    const handleScroll = useCallback(() => {
+        const currentScrollY = window.scrollY;
+        const heroHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+        const viewportHeight = window.innerHeight;
+
+        // Check if near footer (last 400px of page)
+        const footerThreshold = documentHeight - viewportHeight - 400;
+        setInFooter(currentScrollY > footerThreshold);
+
+        setScrolled(currentScrollY > 20);
+
+        if (currentScrollY < heroHeight * 0.8) {
+            setHidden(false);
+        } else {
+            if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                setHidden(true);
+            } else if (currentScrollY < lastScrollY) {
+                setHidden(false);
+            }
+        }
+
+        setLastScrollY(currentScrollY);
+    }, [lastScrollY]);
+
+    // Mouse at top of screen
+    const handleMouseMove = useCallback((e: MouseEvent) => {
+        const threshold = 80;
+        if (e.clientY < threshold) {
+            setMouseAtTop(true);
+            setHidden(false);
+        } else if (e.clientY > threshold * 2) {
+            setMouseAtTop(false);
+        }
+    }, []);
 
     useEffect(() => {
-        const handleScroll = () => {
-            const currentScrollY = window.scrollY;
-            setScrolled(currentScrollY > 20);
-            setHidden(currentScrollY > 50); // Hide after 50px scroll
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        window.addEventListener('mousemove', handleMouseMove);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('mousemove', handleMouseMove);
         };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    }, [handleScroll, handleMouseMove]);
+
+    const shouldShowLogo = !hidden || mouseAtTop || menuOpen;
+
+    // Logo color: white in hero or footer, black when scrolled over light sections
+    const logoColor = (!scrolled || inFooter) ? 'text-white' : 'text-black';
 
     return (
         <>
+            {/* Logo - Shows based on scroll behavior, no pill styling */}
             <motion.header
                 initial={{ y: -100, opacity: 0 }}
                 animate={{
-                    y: hidden && !isOpen ? -100 : 0,
-                    opacity: hidden && !isOpen ? 0 : 1
+                    y: shouldShowLogo ? 0 : -100,
+                    opacity: shouldShowLogo ? 1 : 0
                 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-                className={`fixed top-4 left-0 right-0 z-50 transition-all duration-300 mx-auto max-w-4xl ${scrolled || isOpen ? 'glass-nav rounded-full py-3 px-6 shadow-lg' : 'bg-transparent py-4 px-6'
-                    }`}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                className="fixed top-4 left-4 z-[100] py-4 px-6"
             >
-                <div className="flex items-center justify-between">
-                    <Link href="/" className="font-display text-xl font-bold tracking-tight">
-                        WebPros
-                    </Link>
-
-                    {/* Desktop Nav */}
-                    <nav className="hidden md:flex items-center gap-8">
-                        {['Services', 'About', 'Work', 'Contact'].map((item) => (
-                            <Link
-                                key={item}
-                                href={`#${item.toLowerCase()}`}
-                                className="text-secondary hover:text-foreground transition-colors text-sm font-medium tracking-wide"
-                            >
-                                {item}
-                            </Link>
-                        ))}
-                        <Link
-                            href="#contact"
-                            className="px-5 py-2 bg-foreground text-primary font-medium rounded-full hover:bg-accent hover:text-white transition-all text-xs uppercase tracking-wider"
-                        >
-                            Let's Collaborate
-                        </Link>
-                    </nav>
-
-                    {/* Mobile Toggle */}
-                    <button
-                        className="md:hidden text-foreground"
-                        onClick={() => setIsOpen(!isOpen)}
-                    >
-                        {isOpen ? <X size={20} /> : <Menu size={20} />}
-                    </button>
-                </div>
+                <Link
+                    href="/"
+                    className={`font-display text-xl font-bold tracking-tight transition-colors duration-300 ${logoColor}`}
+                >
+                    WebPros
+                </Link>
             </motion.header>
 
-            {/* Mobile Menu Overlay */}
-            <AnimatePresence>
-                {isOpen && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-40 bg-background/95 backdrop-blur-md pt-24 px-6 md:hidden"
-                    >
-                        <nav className="flex flex-col gap-6 items-center text-center">
-                            {['Services', 'About', 'Work', 'Contact'].map((item) => (
-                                <Link
-                                    key={item}
-                                    href={`#${item.toLowerCase()}`}
-                                    className="text-foreground text-2xl font-display font-bold uppercase"
-                                    onClick={() => setIsOpen(false)}
-                                >
-                                    {item}
-                                </Link>
-                            ))}
-                        </nav>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            {/* StaggeredMenu - Full Navigation with GSAP animations */}
+            <StaggeredMenu
+                position="right"
+                colors={['#1a1a1a', '#0a0a0a']}
+                items={menuItems}
+                socialItems={socialItems}
+                displaySocials={true}
+                displayItemNumbering={true}
+                logoUrl=""
+                menuButtonColor={(!scrolled || inFooter) ? "#ffffff" : "#000000"}
+                openMenuButtonColor="#ffffff"
+                accentColor="#ac747a"
+                changeMenuColorOnOpen={true}
+                isFixed={true}
+                closeOnClickAway={true}
+                onMenuOpen={() => setMenuOpen(true)}
+                onMenuClose={() => setMenuOpen(false)}
+            />
         </>
     );
 }
+

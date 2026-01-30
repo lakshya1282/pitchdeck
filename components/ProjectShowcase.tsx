@@ -8,30 +8,30 @@ const projects = [
     {
         id: "01",
         title: "TheWaveCon",
-        category: "EVENT_PLATFORM",
-        year: "2024",
+        category: "INDUSTRIAL_COMPANY",
+        year: "2025",
         link: "https://thewavecon.com"
     },
     {
         id: "02",
         title: "BrownLand",
-        category: "ECOMMERCE",
+        category: "COFFEE_OUTLET",
         year: "2025",
-        link: "https://brownlandcoffe.com"
+        link: "https://brownlandcoffee.com"
     },
     {
         id: "03",
-        title: "Neon_Dash",
-        category: "DASHBOARD",
+        title: "WebPros",
+        category: "AGENCY",
         year: "2025",
         link: "#"
     },
     {
         id: "04",
-        title: "Hyper_Frame",
-        category: "AGENCY",
+        title: "Revamped Sting",
+        category: "REDESIGN",
         year: "2026",
-        link: "#"
+        link: "https://elaborate-haupia-dccea1.netlify.app/"
     }
 ];
 
