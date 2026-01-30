@@ -100,10 +100,11 @@ export default function Navbar() {
 
             {/* StaggeredMenu - Full Navigation with GSAP animations */}
             <StaggeredMenu
+                className=""
                 position="right"
                 colors={['#1a1a1a', '#0a0a0a']}
-                items={menuItems}
-                socialItems={socialItems}
+                items={menuItems as any}
+                socialItems={socialItems as any}
                 displaySocials={true}
                 displayItemNumbering={true}
                 logoUrl=""

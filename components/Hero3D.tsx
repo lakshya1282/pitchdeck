@@ -155,14 +155,13 @@ const WaterMaterial = shaderMaterial(
     fragmentShader
 );
 
-// Declare global type for the shader material to make TS happy
+// Extend Three.js with our custom material
 extend({ WaterMaterial });
 
-declare global {
-    namespace JSX {
-        interface IntrinsicElements {
-            waterMaterial: any; // Using any to avoid the namespace issues for now
-        }
+// Type declaration for JSX element
+declare module "@react-three/fiber" {
+    interface ThreeElements {
+        waterMaterial: object;
     }
 }
 

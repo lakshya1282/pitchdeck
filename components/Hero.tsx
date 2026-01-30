@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValue, useSpring, Variants } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 
 // --- PARTICLE COMPONENT ---
@@ -114,7 +114,7 @@ export default function Hero() {
             scale: 1,
             transition: {
                 duration: 1.4,
-                ease: "easeOut"
+                ease: "easeOut" as const
             }
         }
     };
@@ -131,7 +131,7 @@ export default function Hero() {
             x: 0,
             transition: {
                 duration: 1.6,
-                ease: "easeOut",
+                ease: "easeOut" as const,
                 delay: 1.0
             }
         }
