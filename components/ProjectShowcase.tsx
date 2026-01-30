@@ -32,6 +32,13 @@ const projects = [
         category: "REDESIGN",
         year: "2026",
         link: "https://elaborate-haupia-dccea1.netlify.app/"
+    },
+    {
+        id: "05",
+        title: "CULINARY ARTISTRY",
+        category: "RESTAURANT",
+        year: "2026",
+        link: "https://monumental-sawine-960dd6.netlify.app/"
     }
 ];
 
@@ -66,7 +73,6 @@ function ProjectItem({ project }: { project: any }) {
             className="group relative flex flex-col md:flex-row items-baseline justify-between border-t border-white/20 py-16 transition-colors hover:bg-white/5 px-2 md:px-8 overflow-hidden cursor-pointer"
         >
             <div className="flex items-baseline gap-4 md:gap-12 relative z-10 w-full md:w-auto">
-                <span className="font-mono text-primary text-sm">({project.id})</span>
                 <h3 className="font-display text-4xl md:text-8xl font-bold uppercase transition-transform duration-500 group-hover:translate-x-4">
                     {project.title}
                 </h3>
@@ -75,9 +81,6 @@ function ProjectItem({ project }: { project: any }) {
             <div className="flex items-center gap-8 md:gap-32 mt-4 md:mt-0 relative z-10">
                 <span className="font-mono text-xs tracking-widest opacity-60 group-hover:opacity-100 transition-opacity">
                     [{project.category}]
-                </span>
-                <span className="font-mono text-xs tracking-widest opacity-60">
-                    {project.year}
                 </span>
                 <motion.div
                     variants={{

@@ -184,7 +184,7 @@ export default function MeetTeam() {
                             </div>
 
                             {/* Member Info Overlay */}
-                            <div className="member-info absolute bottom-20 left-10 md:bottom-32 md:left-20 z-20 text-white max-w-4xl">
+                            <div className="member-info absolute bottom-8 left-10 md:bottom-12 md:left-20 z-20 text-white max-w-4xl">
                                 <h3 className="text-5xl md:text-8xl font-bold uppercase tracking-tight mb-4 drop-shadow-lg">
                                     {member.name}
                                 </h3>
