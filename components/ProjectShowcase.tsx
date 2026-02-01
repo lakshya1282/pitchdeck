@@ -39,6 +39,13 @@ const projects = [
         category: "RESTAURANT",
         year: "2026",
         link: "https://monumental-sawine-960dd6.netlify.app/"
+    },
+    {
+        id: "06",
+        title: "Monster Energy Hero",
+        category: "HERO_SECTION",
+        year: "2026",
+        link: "https://delightful-cobbler-272e1f.netlify.app/"
     }
 ];
 
